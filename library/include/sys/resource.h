@@ -75,6 +75,14 @@ extern "C" {
 #define	RLIM_OFILE	RLIMIT_NOFILE
 #define	RLIM_STACK	7
 
+#define RLIMIT_NOFILE   RLIM_NOFILE	/* max number of open files */
+#define RLIMIT_CPU      RLIM_CPU        /* CPU time in sec */
+#define RLIMIT_FSIZE    RLIM_FSIZE      /* Maximum filesize */
+#define RLIMIT_DATA     RLIM_DATA       /* max data size */
+#define RLIMIT_STACK    RLIM_STACK      /* max stack size */
+#define RLIMIT_CORE     RLIM_CORE       /* max core file size */
+
+
 /****************************************************************************/
 
 struct rlimit

@@ -110,6 +110,8 @@ struct flock
 #define F_UNLCK		2	/* unlock */
 #define F_WRLCK		3	/* exclusive or write lock */
 
+#define FD_CLOEXEC      1       /* posix */
+
 /****************************************************************************/
 
 extern int open(const char *path_name, int open_flag, ... /* mode_t mode */ );

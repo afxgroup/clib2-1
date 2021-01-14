@@ -78,8 +78,8 @@ typedef unsigned short	in_port_t;
  * Protocols
  */
 #define	IPPROTO_IP		0		/* dummy for IP */
-#define	IPPROTO_ICMP	1		/* control message protocol */
-#define	IPPROTO_IGMP	2		/* group mgmt protocol */
+#define	IPPROTO_ICMP		1		/* control message protocol */
+#define	IPPROTO_IGMP		2		/* group mgmt protocol */
 #define	IPPROTO_GGP		3		/* gateway^2 (deprecated) */
 #define	IPPROTO_TCP		6		/* tcp */
 #define	IPPROTO_EGP		8		/* exterior gateway protocol */
@@ -87,8 +87,9 @@ typedef unsigned short	in_port_t;
 #define	IPPROTO_UDP		17		/* user datagram protocol */
 #define	IPPROTO_IDP		22		/* xns idp */
 #define	IPPROTO_TP		29 		/* tp-4 w/ class negotiation */
+#define IPPROTO_IPV6     	41   		/* IPv6 header */
 #define	IPPROTO_EON		80		/* ISO cnlp */
-#define	IPPROTO_ENCAP	98		/* encapsulation header */
+#define	IPPROTO_ENCAP		98		/* encapsulation header */
 
 #define	IPPROTO_RAW		255		/* raw IP packet */
 #define	IPPROTO_MAX		256
@@ -110,6 +111,10 @@ typedef unsigned short	in_port_t;
 struct in_addr
 {
 	unsigned long s_addr;
+};
+
+struct in6_addr {
+        unsigned char s6_addr[16];   /* IPv6 address */
 };
 
 /*
@@ -163,6 +168,14 @@ struct sockaddr_in
 	unsigned short	sin_port;
 	struct in_addr	sin_addr;
 	unsigned char	sin_zero[8];
+};
+
+struct sockaddr_in6 {
+	unsigned char   sin6_family;   /* AF_INET6 */
+	unsigned short  sin6_port;     /* port number */
+	unsigned long   sin6_flowinfo; /* IPv6 flow information */
+	struct in6_addr sin6_addr;     /* IPv6 address */
+	unsigned long   sin6_scope_id; /* Scope ID (new in 2.4) */
 };
 
 /*

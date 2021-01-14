@@ -47,6 +47,10 @@
 #include <netinet/in.h>
 #endif /* _NETINET_IN_H */
 
+#ifndef _SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+
 /****************************************************************************/
 
 #ifdef __cplusplus
@@ -73,6 +77,9 @@ extern struct in_addr inet_makeaddr(in_addr_t net, in_addr_t lna);
 extern in_addr_t inet_netof(struct in_addr in);
 extern in_addr_t inet_network(const char *cp);
 extern char *inet_ntoa(struct in_addr in);
+
+extern const char *inet_ntop (int af, const void *restrict src, char *restrict dst, socklen_t cnt);
+extern int inet_pton (int af, const char *src, void *dst);
 
 #endif /* __NO_NET_API */
 

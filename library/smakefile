@@ -378,6 +378,7 @@ LIB_C_OBJS4 = \
 	time_localtime.o \
 	time_localtime_r.o \
 	time_mktime.o \
+	time_nanosleep.o \
 	time_numbertostring.o \
 	time_strftime.o \
 	time_time.o \

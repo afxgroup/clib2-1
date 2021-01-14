@@ -21,7 +21,7 @@
 # These are for the cross compiler, with the operating system header files
 # stored in "/V/include" and the network header files in a local directory
 # called "netinclude".
-SDK_INCLUDE := /V/include
+SDK_INCLUDE := /usr/ppc-amigaos/SDK/include
 NET_INCLUDE := netinclude
 CC := ppc-amigaos-gcc
 AR := ppc-amigaos-ar -q
@@ -64,7 +64,7 @@ WARNINGS := \
 #	-Wconversion -Wshadow -Wbad-function-cast
 
 INCLUDES   := -Iinclude -I. -I$(SDK_INCLUDE)
- OPTIONS   := -DUSE_64_BIT_INTS -D__USE_INLINE__ -Wa,-mregnames -fno-builtin -fno-common -std=c99 -nostdlib
+ OPTIONS   := -DUSE_64_BIT_INTS -D__USE_INLINE__ -Wa,-mregnames -fno-builtin -fno-common -Wno-error=array-bounds -Wno-unused-but-set-variable -Wno-unused-variable -Wno-unused-parameter -std=c99 -nostdlib
 OPTIMIZE   := -DNDEBUG -O3
 
 #DEBUG     := -ggdb

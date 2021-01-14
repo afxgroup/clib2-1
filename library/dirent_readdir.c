@@ -79,8 +79,10 @@ readdir(DIR * directory_pointer)
 
 				dh->dh_Position++;
 
-				dh->dh_DirectoryEntry.d_ino = 0;
+//				dh->dh_DirectoryEntry.d_ino = 0;
 				strcpy(dh->dh_DirectoryEntry.d_name,".");
+                                dh->dh_DirectoryEntry.d_namlen = 2;
+                                dh->dh_DirectoryEntry.d_type = DT_DIR;
 
 				result = &dh->dh_DirectoryEntry;
 			}
@@ -116,7 +118,15 @@ readdir(DIR * directory_pointer)
 
 									strcpy(dh->dh_DirectoryEntry.d_name,fib->fib_FileName);
 
-									dh->dh_DirectoryEntry.d_ino = fib->fib_DiskKey;
+									//dh->dh_DirectoryEntry.d_ino = fib->fib_DiskKey;
+					                                dh->dh_DirectoryEntry.d_namlen = strlen(dh->dh_DirectoryEntry.d_name) + 1;
+					                                if (dh->dh_FileInfo.fib_DirEntryType > 0)
+					                                        dh->dh_DirectoryEntry.d_type = DT_DIR;
+					                                else
+					                                {
+					                                        dh->dh_DirectoryEntry.d_type = DT_REG;
+					                                        //TODO - add other files type
+					                                }
 
 									result = &dh->dh_DirectoryEntry;
 								}
@@ -147,9 +157,11 @@ readdir(DIR * directory_pointer)
 
 					dh->dh_Position++;
 
-					dh->dh_DirectoryEntry.d_ino = dh->dh_FileInfo.fib_DiskKey;
+					//dh->dh_DirectoryEntry.d_ino = dh->dh_FileInfo.fib_DiskKey;
 
 					strcpy(dh->dh_DirectoryEntry.d_name,".");
+	                                dh->dh_DirectoryEntry.d_namlen = 2;
+                                        dh->dh_DirectoryEntry.d_type = DT_DIR;
 
 					result = &dh->dh_DirectoryEntry;
 				}
@@ -176,7 +188,9 @@ readdir(DIR * directory_pointer)
 
 					SHOWMSG("returning ..");
 
-					dh->dh_DirectoryEntry.d_ino = fib->fib_DiskKey;
+					//dh->dh_DirectoryEntry.d_ino = fib->fib_DiskKey;
+	                                dh->dh_DirectoryEntry.d_namlen = 3;
+                                        dh->dh_DirectoryEntry.d_type = DT_DIR;
 
 					strcpy(dh->dh_DirectoryEntry.d_name,"..");
 
@@ -192,12 +206,19 @@ readdir(DIR * directory_pointer)
 
 			if(ExNext(dh->dh_DirLock,&dh->dh_FileInfo))
 			{
-				dh->dh_DirectoryEntry.d_ino = dh->dh_FileInfo.fib_DiskKey;
-
+//				dh->dh_DirectoryEntry.d_ino = dh->dh_FileInfo.fib_DiskKey;
 				assert( sizeof(dh->dh_DirectoryEntry.d_name) >= sizeof(dh->dh_FileInfo.fib_FileName) );
 
 				strcpy(dh->dh_DirectoryEntry.d_name,dh->dh_FileInfo.fib_FileName);
+				dh->dh_DirectoryEntry.d_namlen = strlen(dh->dh_DirectoryEntry.d_name) + 1;
 
+				if (dh->dh_FileInfo.fib_DirEntryType > 0)
+					dh->dh_DirectoryEntry.d_type = DT_DIR;
+				else
+				{
+					dh->dh_DirectoryEntry.d_type = DT_REG;
+					//TODO - add other files type
+				}
 				result = &dh->dh_DirectoryEntry;
 			}
 			else

@@ -145,6 +145,7 @@ struct linger
 #define	AF_LOCAL		1			/* local to host (pipes, portals) */
 #define	AF_UNIX			AF_LOCAL	/* backward compatibility */
 #define	AF_INET			2			/* internetwork: UDP, TCP, etc. */
+#define AF_INET6		10			/* IP version 6	 */
 #define	AF_IMPLINK		3			/* arpanet imp addresses */
 #define	AF_PUP			4			/* pup protocols: e.g. BSP */
 #define	AF_CHAOS		5			/* mit CHAOS protocols */
@@ -200,6 +201,7 @@ struct sockproto
 #define	PF_LOCAL		AF_LOCAL
 #define	PF_UNIX			PF_LOCAL	/* backward compatibility */
 #define	PF_INET			AF_INET
+#define PF_INET6		AF_INET6
 #define	PF_IMPLINK		AF_IMPLINK
 #define	PF_PUP			AF_PUP
 #define	PF_CHAOS		AF_CHAOS

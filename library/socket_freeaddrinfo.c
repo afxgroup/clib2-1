@@ -1,5 +1,5 @@
 /*
- * $Id: stdlib_dlclose.c,v 1.2 2010-08-21 11:37:03 obarthel Exp $
+ * $Id: socket_freeaddrinfo.c,v 1.0 2021-01-13 10:41:15 apalmate Exp $
  *
  * :ts=4
  *
@@ -31,56 +31,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _STDLIB_HEADERS_H
-#include "stdlib_headers.h"
-#endif /* _STDLIB_HEADERS_H */
+#if defined(SOCKET_SUPPORT)
 
 /****************************************************************************/
 
-/* The shared object API is available only on AmigaOS 4.0. */
-#if defined(__amigaos4__)
+#ifndef _SOCKET_HEADERS_H
+#include "socket_headers.h"
+#endif /* _SOCKET_HEADERS_H */
 
 /****************************************************************************/
 
-#include <dlfcn.h>
-
-/****************************************************************************/
-
-#include <libraries/elf.h>
-#include <proto/elf.h>
-
-/****************************************************************************/
-
-extern struct ElfIFace *	__IElf;
-extern Elf32_Handle			__dl_elf_handle;
-Elf32_Error			__elf_error_code;
-
-/****************************************************************************/
-
-int dlclose(void * handle)
+void freeaddrinfo(struct addrinfo *ai)
 {
-	int result = -1;
-
-	if(__dl_elf_handle != NULL)
+	while (ai)
 	{
-		struct ElfIFace * IElf = __IElf;
-		Elf32_Error error;
+		struct addrinfo *cur;
 
-		error = DLClose(__dl_elf_handle,handle);
-		if(error != ELF32_NO_ERROR)
-		{
-			__elf_error_code = error;
-			goto out;
-		}
+		cur = ai;
+		ai = ai->ai_next;
+
+		if (cur->ai_canonname)
+			free(cur->ai_canonname);
+		free(cur);
 	}
-
-	result = 0;
-
- out:
-
-	return(result);
 }
 
-/****************************************************************************/
-
-#endif /* __amigaos4__ */
+#endif

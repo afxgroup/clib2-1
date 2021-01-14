@@ -1,5 +1,5 @@
 /*
- * $Id: stdlib_dlclose.c,v 1.2 2010-08-21 11:37:03 obarthel Exp $
+ * $Id: time_getres.c,v 1.0 2020-01-13 17:27:27 apalmate Exp $
  *
  * :ts=4
  *
@@ -31,56 +31,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _STDLIB_HEADERS_H
-#include "stdlib_headers.h"
-#endif /* _STDLIB_HEADERS_H */
+#include <time.h>
 
-/****************************************************************************/
+#ifndef _STDIO_HEADERS_H
+#include "stdio_headers.h"
+#endif /* _STDIO_HEADERS_H */
 
-/* The shared object API is available only on AmigaOS 4.0. */
-#if defined(__amigaos4__)
-
-/****************************************************************************/
-
-#include <dlfcn.h>
-
-/****************************************************************************/
-
-#include <libraries/elf.h>
-#include <proto/elf.h>
-
-/****************************************************************************/
-
-extern struct ElfIFace *	__IElf;
-extern Elf32_Handle			__dl_elf_handle;
-Elf32_Error			__elf_error_code;
-
-/****************************************************************************/
-
-int dlclose(void * handle)
+/* Get resolution of clock.  */
+int clock_getres(clockid_t clock_id, struct timespec *res)
 {
-	int result = -1;
+   ENTER();
 
-	if(__dl_elf_handle != NULL)
-	{
-		struct ElfIFace * IElf = __IElf;
-		Elf32_Error error;
+   int result = -1;
 
-		error = DLClose(__dl_elf_handle,handle);
-		if(error != ELF32_NO_ERROR)
-		{
-			__elf_error_code = error;
-			goto out;
-		}
-	}
+   switch (clock_id)
+   {
+   case CLOCK_MONOTONIC:
+   case CLOCK_REALTIME:
+   {
+      long int clk_tck = CLOCKS_PER_SEC;
 
-	result = 0;
+      /* This implementation assumes that the realtime clock has a
+              resolution higher than 1 second.  This is the case for any
+              reasonable implementation.  */
+      res->tv_sec = 0;
+      res->tv_nsec = 1000000000 / CLOCKS_PER_SEC;
 
- out:
+      result = 0;
+   }
+   break;
 
-	return(result);
+   default:
+      __set_errno(EINVAL);
+      break;
+   }
+
+   RETURN(result);
+   return result;
 }
-
-/****************************************************************************/
-
-#endif /* __amigaos4__ */

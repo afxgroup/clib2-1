@@ -1,5 +1,5 @@
 /*
- * $Id: stdlib_dlclose.c,v 1.2 2010-08-21 11:37:03 obarthel Exp $
+ * $Id: stdlib_getexecname.c,v 1.0 2020-01-13 13:28:26 apalmate Exp $
  *
  * :ts=4
  *
@@ -35,52 +35,14 @@
 #include "stdlib_headers.h"
 #endif /* _STDLIB_HEADERS_H */
 
-/****************************************************************************/
-
-/* The shared object API is available only on AmigaOS 4.0. */
-#if defined(__amigaos4__)
-
-/****************************************************************************/
-
-#include <dlfcn.h>
-
-/****************************************************************************/
-
-#include <libraries/elf.h>
-#include <proto/elf.h>
-
-/****************************************************************************/
-
-extern struct ElfIFace *	__IElf;
-extern Elf32_Handle			__dl_elf_handle;
-Elf32_Error			__elf_error_code;
-
-/****************************************************************************/
-
-int dlclose(void * handle)
-{
-	int result = -1;
-
-	if(__dl_elf_handle != NULL)
-	{
-		struct ElfIFace * IElf = __IElf;
-		Elf32_Error error;
-
-		error = DLClose(__dl_elf_handle,handle);
-		if(error != ELF32_NO_ERROR)
-		{
-			__elf_error_code = error;
-			goto out;
-		}
+const char *
+getexecname(void) {
+        char pathBuffer[PATH_MAX] = {0};
+        if (GetCliProgramName(pathBuffer, PATH_MAX - 1)) {
+		char *ret = calloc(1, strlen(pathBuffer) + 1);
+		return ret;
+        }
+        else {
+                return "?";
 	}
-
-	result = 0;
-
- out:
-
-	return(result);
 }
-
-/****************************************************************************/
-
-#endif /* __amigaos4__ */

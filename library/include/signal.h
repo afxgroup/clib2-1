@@ -62,6 +62,12 @@ extern "C" {
 #define SIGSEGV	5
 #define SIGTERM	6
 
+/* TO IMPLEMENT INTO LIBRARY (if possible) */
+#define SIGHUP  1       /* hangup */
+#define SIGKILL 9       /* kill (cannot be caught or ignored) */
+#define SIGCHLD 20      /* to parent on child stop or exit */
+#define SIGPIPE 13      /* write on a pipe with no one to read it */
+
 /****************************************************************************/
 
 extern void (*signal(int sig, void (*)(int)))(int);
