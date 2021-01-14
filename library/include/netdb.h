@@ -169,18 +169,6 @@ struct protoent
 #define NI_MAXHOST      1025
 #define NI_MAXSERV      32
 
-#define _SS_MAXSIZE 128
-#define _SS_ALIGNSIZE (sizeof(signed long long))
-#define _SS_PAD1SIZE (_SS_ALIGNSIZE - sizeof (short))
-#define _SS_PAD2SIZE (_SS_MAXSIZE - (sizeof (short) + _SS_PAD1SIZE + _SS_ALIGNSIZE))
-
-struct sockaddr_storage {
-        short ss_family;
-        char __ss_pad1[_SS_PAD1SIZE];
-        signed long long __ss_align;
-        char __ss_pad2[_SS_PAD2SIZE];
-};
-
 #define EAI_NOERROR 0
 
 /* Error values for `getaddrinfo' function.  */
