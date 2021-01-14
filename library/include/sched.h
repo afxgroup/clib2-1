@@ -49,6 +49,16 @@ extern "C" {
 
 /****************************************************************************/
 
+#define SCHED_OTHER    0
+#define SCHED_FIFO     1
+#define SCHED_RR       2
+
+struct sched_param {
+  int sched_priority;           /* Process execution scheduling priority */
+};
+
+/****************************************************************************/
+
 extern void sched_yield(void);
 
 /****************************************************************************/
