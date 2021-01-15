@@ -372,6 +372,8 @@ C_LIB := \
 	unistd_lchown.o \
 	unistd_link.o \
 	unistd_lockf.o \
+	unistd_pipe.o \
+	unistd_pipe2.o \
 	unistd_readlink.o \
 	unistd_realpath.o \
 	unistd_sleep.o \
