@@ -35,6 +35,10 @@
 #include "time_headers.h"
 #endif /* _TIME_HEADERS_H */
 
+#ifndef _UNISTD_HEADERS_H
+#include "unistd_headers.h"
+#endif /* _UNISTD_HEADERS_H */
+
 /****************************************************************************/
 
 /* The following is not part of the ISO 'C' (1994) standard. */
@@ -54,5 +58,6 @@ nanosleep(const struct timespec *req, struct timespec *rem)
 
         __time_delay(0,microseconds);
 
-        LEAVE();
+        RETURN(0);
+        return 0;
 }

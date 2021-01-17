@@ -145,6 +145,11 @@ extern int clock_gettime(clockid_t clk_id, struct timespec *t);
 extern int clock_settime(clockid_t clk_id, const struct timespec* t);
 extern int clock_getres(clockid_t clock_id, struct timespec *res);
 
+/* Defined in localtime.c.  */
+extern char *tzname[2];       /* Current timezone names.  */
+extern int daylight;          /* If daylight-saving time is ever in use.  */
+extern long int timezone;     /* Seconds west of UTC.  */
+
 /****************************************************************************/
 
 #ifdef __cplusplus

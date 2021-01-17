@@ -58,6 +58,7 @@ C_LIB := \
 	inttypes_imaxabs.o \
 	inttypes_strtoimax.o \
 	inttypes_strtoumax.o \
+	langinfo_langinfo.o \
 	libgen_basename.o \
 	libgen_dirname.o \
 	locale_init_exit.o \
@@ -237,6 +238,7 @@ C_LIB := \
 	stdlib_main_stub.o \
 	stdlib_malloc.o \
 	stdlib_math.o \
+	stdlib_mbstowcs.o \
 	stdlib_mbtowc.o \
 	stdlib_mkdtemp.o \
 	stdlib_mkstemp.o \
@@ -287,6 +289,7 @@ C_LIB := \
 	stdlib_udivsi4.o \
 	stdlib_umodsi3.o \
 	stdlib_unsetenv.o \
+	stdlib_wcstombs.o \
 	strings_ffs.o \
 	strings_strcasecmp.o \
 	strings_strncasecmp.o \
@@ -348,6 +351,7 @@ C_LIB := \
 	time_time.o \
 	time_tzset.o \
 	time_weekday.o \
+	timezone_init_exit.o \
 	uio_readv.o \
 	uio_writev.o \
 	ulimit_ulimit.o \
@@ -422,6 +426,7 @@ C_LIB := \
 	wchar_wcsncpy.o \
 	wchar_wscoll.o \
 	wchar_wcspbrk.o \
+	wchar_wcsrchr.o \
 	wchar_wcsrtombs.o \
 	wchar_wcsspn.o \
 	wchar_wcstod.o \

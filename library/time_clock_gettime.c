@@ -37,9 +37,9 @@
 #include "stdio_headers.h"
 #endif /* _STDIO_HEADERS_H */
 
-#ifndef _TIME_HEADERS_H
-#include "time_headers.h"
-#endif /* _TIME_HEADERS_H */
+#ifndef _TIMEZONE_HEADERS_H
+#include "timezone_headers.h"
+#endif /* _TIMEZONE_HEADERS_H */
 
 int clock_gettime(clockid_t clk_id, struct timespec *t)
 {
@@ -51,40 +51,21 @@ int clock_gettime(clockid_t clk_id, struct timespec *t)
         return -1;
     }
 
+    DECLARE_TIMEZONEBASE();
+
     struct timeval tv;
     int result = 0;
-    struct Library *TimezoneBase = NULL;
-#if defined(__amigaos4__)
-    struct TimezoneIFace *ITimezone = NULL;
-#endif
     struct timerequest *tr = NULL;
-    int32 gmtoffset = 0;
+    uint32 gmtoffset = 0;
     int8 dstime = -1;
 
     //Set default value for tv
     tv.tv_secs = tv.tv_micro = 0;
 
 #ifdef __amigaos4__
-    if ((TimezoneBase = OpenLibrary("timezone.library", 52)))
-    {
-        if ((ITimezone = (struct TimezoneIFace *)GetInterface(TimezoneBase, "main", 1, NULL)))
-        {
-            GetTimezoneAttrs(NULL, TZA_UTCOffset, &gmtoffset, TZA_TimeFlag, &dstime, TAG_DONE);
-            DropInterface((struct Interface *)ITimezone);
-        }
-        else
-        {
-            SHOWMSG("Cannot get timezone interface\n");
-            result = -1;
-        }
-        CloseLibrary(TimezoneBase);
-    }
-    else
-    {
-        SHOWMSG("Cannot open timezone.library >=52\n");
-        result = -1;
-    }
+    GetTimezoneAttrs(NULL, TZA_UTCOffset, &gmtoffset, TZA_TimeFlag, &dstime, TAG_DONE);
 #endif
+
     if (result == 0)
     {
         struct MsgPort *Timer_Port;
